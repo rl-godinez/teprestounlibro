@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+  user: postgres
+  host: postgres
+
+development:
+  <<: *default
+  database: micheteca_development
+
+test:
+  <<: *default
+  database: micheteca_test
+
+production:
+  <<: *default
+  database: micheteca_development

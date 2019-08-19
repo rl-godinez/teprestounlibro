@@ -1,0 +1,27 @@
+services:
+  - postgres
+
+stages:
+  - lint
+  - test
+
+before_script:
+  - ruby -v
+  - node -v
+  - rm -rf vendor/ruby/2.6.0/cache/bundler/git || true
+  - gem install bundler
+  - cp config/database.ci.yml config/database.yml
+  - bundle install
+
+build:
+  stage: test
+  script:
+    - bundle exec rake yarn:install
+    - bundle exec rake db:create RAILS_ENV=test
+    - bundle exec rake db:test:prepare RAILS_ENV=test
+    - bundle exec rake test
+
+rubocop:
+  stage: lint
+  script:
+    - bundle exec rubocop
