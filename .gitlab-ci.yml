@@ -7,8 +7,7 @@ stages:
 
 before_script:
   - ruby -v
-  - node -v
-  - rm -rf vendor/ruby/2.6.0/cache/bundler/git || true
+  - rm -rf vendor/ruby/2.5.5/cache/bundler/git || true
   - gem install bundler
   - cp config/database.ci.yml config/database.yml
   - bundle install
