@@ -1,0 +1,8 @@
+{
+"name": "micheteca",
+"description": "Internal project on michelada",
+"repository": "https://git.michelada.io/products/micheteca",
+"kerwords": ["ruby", "rails"],
+"addons": [ "heroku-postgresql" ]
+}
+
