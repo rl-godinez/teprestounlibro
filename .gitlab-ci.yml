@@ -1,26 +1,50 @@
+image: registry.michelada.io/products/micheteca:latest
+
 services:
   - postgres
 
 stages:
+  - build
   - lint
   - test
 
+cache:
+  paths:
+    - vendor
+    - node_modules
+    - public/packs
+
 before_script:
   - ruby -v
-  - rm -rf vendor/ruby/2.5.5/cache/bundler/git || true
+  - node -v
   - gem install bundler
+  - bundle install -j $(nproc) --path vendor --full-index --clean
   - cp config/database.ci.yml config/database.yml
-  - bundle install
 
 build:
-  stage: test
+  stage: build
   script:
     - bundle exec rake yarn:install
-    - bundle exec rake db:create RAILS_ENV=test
-    - bundle exec rake db:test:prepare RAILS_ENV=test
-    - bundle exec rake test
+    - bundle exec rake webpacker:compile
 
 rubocop:
   stage: lint
   script:
     - bundle exec rubocop
+
+test:
+  stage: test
+  script:
+    - bundle exec rake db:create RAILS_ENV=test
+    - bundle exec rake db:test:prepare RAILS_ENV=test
+    - bundle exec rake test
+
+test_system:
+  stage: test
+  script:
+    - bundle exec rake db:create RAILS_ENV=test
+    - bundle exec rake db:test:prepare RAILS_ENV=test
+    - bundle exec rake test:system
+
+
+
