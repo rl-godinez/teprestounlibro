@@ -5,20 +5,30 @@ stages:
   - lint
   - test
 
+cache:
+  paths:
+    - vendor/ruby
+    - node_modules
+
 before_script:
   - ruby -v
+  - apt-get install curl
+  - curl -sL https://deb.nodesource.com/setup_10.x | bash -
+  - apt-get install nodejs
+  - node -v
   - rm -rf vendor/ruby/2.5.5/cache/bundler/git || true
   - gem install bundler
   - cp config/database.ci.yml config/database.yml
-  - bundle install
+  - bundle install -j $(nproc) --path vendor --full-index --clean
+  - bundle exec rake yarn:install
+  - bundle exec rake webpacker:compile
 
 build:
   stage: test
   script:
-    - bundle exec rake yarn:install
     - bundle exec rake db:create RAILS_ENV=test
     - bundle exec rake db:test:prepare RAILS_ENV=test
-    - bundle exec rake test
+    - CI=true bundle exec rake test
 
 rubocop:
   stage: lint
