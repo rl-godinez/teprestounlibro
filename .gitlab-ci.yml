@@ -1,4 +1,4 @@
-image: registry.michelada.io/products/micheteca:latest
+image: registry.michelada.io/michelada/micheteca:latest
 
 services:
   - postgres
