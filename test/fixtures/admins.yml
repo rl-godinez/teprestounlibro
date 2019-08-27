@@ -6,6 +6,7 @@
 #
 one:
   email: admin@mail.com
+  encrypted_password: <%= Admin.new.send(:password_digest, '111111') %>
 #
 # two: {}
 # column: value
