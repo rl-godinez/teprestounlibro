@@ -30,4 +30,13 @@ class CategoriesTest < ApplicationSystemTestCase
 
     assert_text "Category successfully updated"
   end
+
+  test "destroying a category" do
+    visit categories_url
+    page.accept_confirm do
+      click_on "Destroy", match: :first
+    end
+
+    assert_text "Category was successfully destroyed"
+  end
 end
