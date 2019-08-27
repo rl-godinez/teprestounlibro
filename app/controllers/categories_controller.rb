@@ -38,8 +38,7 @@ class CategoriesController < ApplicationController
 
   def destroy
     @category.destroy
-
-    redirect_to categories_url
+    redirect_to categories_url, notice: 'Category was successfully destroyed.'
   end
 
   private
