@@ -21,6 +21,30 @@ class CategoriesTest < ApplicationSystemTestCase
     assert_text "Category was successfully created"
   end
 
+  test "can not create a category" do
+    visit categories_url
+
+    click_on "New category"
+
+    fill_in 'Name', with: ""
+
+    click_on "Create Category"
+
+    assert_text "Name can't be blank"
+  end
+
+  test "can not create a category with name already taken" do
+    visit categories_url
+
+    click_on "New category"
+
+    fill_in 'Name', with: "comedy"
+
+    click_on "Create Category"
+
+    assert_text "Name has already been taken"
+  end
+
   test "updating a category" do
     visit edit_category_url(@category)
 
@@ -29,6 +53,26 @@ class CategoriesTest < ApplicationSystemTestCase
     click_on "Update Category"
 
     assert_text "Category successfully updated"
+  end
+
+  test "can not update a category with name already taken" do
+    visit edit_category_url(@category)
+
+    fill_in "Name", with: "Comedy"
+
+    click_on "Update Category"
+
+    assert_text "Name has already been taken"
+  end
+
+  test "can not update a category" do
+    visit edit_category_url(@category)
+
+    fill_in "Name", with: ""
+
+    click_on "Update Category"
+
+    assert_text "Name can't be blank"
   end
 
   test "destroying a category" do
