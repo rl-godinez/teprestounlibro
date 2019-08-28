@@ -2,6 +2,7 @@
 
 class BooksController < ApplicationController
   before_action :find_book, only: %i[show edit update destroy]
+  before_action :authenticate_user!
 
   def index
     @books = Book.all
@@ -17,6 +18,7 @@ class BooksController < ApplicationController
 
   def create
     @book = Book.new(book_params)
+    @book.user = current_user
 
     if @book.save
       redirect_to @book, notice: 'Book was successfully created.'

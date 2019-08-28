@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
+  setup do
+    @user = users(:one)
+  end
+
   test "user valid" do
     user = User.new(email: 'test@mail.com',
                     password: 'p@ssword',
@@ -24,5 +28,16 @@ class UserTest < ActiveSupport::TestCase
 
     assert_not user.valid?
     assert_not user.save
+  end
+
+  test '#books' do
+    assert_equal 2, @user.books.size
+  end
+
+  test '#books after destroying user' do
+    user_id = @user.id
+    @user.destroy
+
+    assert_equal 0, Book.where(user_id: user_id).size
   end
 end
