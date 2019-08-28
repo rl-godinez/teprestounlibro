@@ -1,13 +1,13 @@
 require "application_system_test_case"
 
-class AdminsTest < ApplicationSystemTestCase
+class AdminUsersTest < ApplicationSystemTestCase
   test "visiting the admin login" do
-    visit new_admin_session_url
+    visit new_admin_user_session_url
     assert_selector "label", text: "Email"
   end
 
   test "admin can login" do
-    visit new_admin_session_url
+    visit new_admin_user_session_url
     fill_in 'Email', with: 'admin@mail.com'
     fill_in 'Password', with: '111111'
 
