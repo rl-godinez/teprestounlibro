@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class Admin < ApplicationRecord
+class AdminUser < ApplicationRecord
   devise :database_authenticatable, :rememberable, :validatable
 end
