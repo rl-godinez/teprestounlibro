@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  authenticate :admin_user do
+    namespace :admin do
+      resources :users
+      resources :admin_users
+      resources :books
+      resources :categories
+
+      root to: "admin_users#index"
+      end
+  end
   resources :books
   root 'welcome#index'
 
