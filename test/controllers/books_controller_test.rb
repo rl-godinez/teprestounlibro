@@ -29,7 +29,7 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
 
     assert_difference('Book.count') do
-      post books_url, params: { book: { description: @book.description, name: @book.name, status: @book.status } }
+      post books_url, params: { book: { description: @book.description, name: @book.name, status: @book.status, category_ids: [Category.last.id] } }
     end
 
     assert_redirected_to book_url(Book.last)
@@ -39,6 +39,16 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
     assert_no_difference('Book.count') do
       post books_url, params: { book: { description: '', name: '', status: '' } }
+    end
+
+    assert_response :success
+  end
+
+  test 'should not create book with no categories selected' do
+    sign_in @user
+
+    assert_no_difference('Book.count') do
+      post books_url, params: { book: { description: 'Test description', name: 'Test name', category_ids: []  } }
     end
 
     assert_response :success
@@ -61,7 +71,7 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
   test "should update book" do
     sign_in @user
 
-    patch book_url(@book), params: { book: { description: @book.description, name: @book.name, status: @book.status } }
+    patch book_url(@book), params: { book: { description: @book.description, name: @book.name, status: @book.status, category_ids: [Category.last.id] } }
     assert_redirected_to book_url(@book)
   end
 
