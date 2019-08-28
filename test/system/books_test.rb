@@ -20,6 +20,7 @@ class BooksTest < ApplicationSystemTestCase
     fill_in "Description", with: @book.description
     fill_in "Name", with: @book.name
     fill_in "Status", with: @book.status
+    check "Comedy"
     click_on "Create Book"
 
     assert_text "Book was successfully created"
@@ -36,7 +37,7 @@ class BooksTest < ApplicationSystemTestCase
     fill_in "Status", with: ''
     click_on "Create Book"
 
-    assert_text "Name can't be blank and Description can't be blank"
+    assert_text "Name can't be blank, Description can't be blank, and Category ids can't be blank"
   end
 
   test "updating a Book" do
@@ -47,6 +48,7 @@ class BooksTest < ApplicationSystemTestCase
     fill_in "Description", with: @book.description
     fill_in "Name", with: @book.name
     fill_in "Status", with: @book.status
+    check "Comedy"
     click_on "Update Book"
 
     assert_text "Book was successfully updated"
@@ -63,7 +65,7 @@ class BooksTest < ApplicationSystemTestCase
     fill_in "Status", with: ''
     click_on "Update Book"
 
-    assert_text "Name can't be blank and Description can't be blank"
+    assert_text "Name can't be blank, Description can't be blank, and Category ids can't be blank"
   end
 
   test "destroying a Book" do

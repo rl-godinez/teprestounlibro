@@ -26,6 +26,13 @@
     <%= form.number_field :status %>
   </div>
 
+  <h5>Select a category</h5>
+  <div class="field form-check form-check-inline">
+    <%= form.collection_check_boxes :category_ids, Category.all, :id, :name do |cb| %>
+      <% cb.label(class: "form-check-label") { cb.check_box(class: "form-check-input" ) + cb.text } %>
+    <% end %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
