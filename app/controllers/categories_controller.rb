@@ -2,6 +2,7 @@
 
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show edit update destroy]
+  before_action :require_admin, except: %i[index show]
 
   def index
     @categories = Category.all
@@ -49,5 +50,9 @@ class CategoriesController < ApplicationController
 
   def set_category
     @category = Category.find(params[:id])
+  end
+
+  def require_admin
+    return redirect_to root_path, alert: 'Only admin users can perform that action' unless admin_user_signed_in?
   end
 end
