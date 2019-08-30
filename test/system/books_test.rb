@@ -4,6 +4,7 @@ class BooksTest < ApplicationSystemTestCase
   setup do
     @book = books(:one)
     @user = users(:one)
+    @user_without_books = users(:two)
   end
 
   test "visiting the index" do
@@ -76,5 +77,23 @@ class BooksTest < ApplicationSystemTestCase
     end
 
     assert_text "Book was successfully destroyed"
+  end
+
+  test "only book owner can destroy a Book" do
+    sign_in @user_without_books
+
+    visit books_url
+
+    page.has_no_selector? 'a', text: 'Destroy'
+  end
+
+  test "only book owner can edit its books" do
+    sign_in @user_without_books
+
+    visit edit_book_path(@book)
+
+    assert_content "Hey! you can't edit this book"
+
+    assert has_current_path?(books_path)
   end
 end
