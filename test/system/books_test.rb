@@ -59,21 +59,21 @@ class BooksTest < ApplicationSystemTestCase
   test "can not update a Book with empty params" do
     sign_in @user
     visit books_url
-    click_on "Edit", match: :first
+    click_on "Edit this book", match: :first
 
     fill_in "Description", with: ''
     fill_in "Name", with: ''
     fill_in "Status", with: ''
     click_on "Update Book"
 
-    assert_text "Name can't be blank, Description can't be blank, and Category ids can't be blank"
+    assert_text "Name can't be blank and Description can't be blank"
   end
 
   test "destroying a Book" do
     sign_in @user
     visit books_url
     page.accept_confirm do
-      click_on "Destroy", match: :first
+      click_on "Delete this book", match: :first
     end
 
     assert_text "Book was successfully destroyed"
