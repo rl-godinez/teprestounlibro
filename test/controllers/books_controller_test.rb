@@ -4,6 +4,7 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
   setup do
     @book = books(:one)
     @user = users(:one)
+    @user_without_books = users(:two)
   end
 
   test "should not get new if user is not signed in" do
@@ -89,6 +90,24 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
 
     assert_difference('Book.count', -1) do
+      delete book_url(@book)
+    end
+
+    assert_redirected_to books_url
+  end
+
+  test "only book owner can edit a book" do
+    sign_in @user_without_books
+
+    get edit_book_url(@book)
+
+    assert_redirected_to books_url
+  end
+
+  test "only book owner can destroy its book" do
+    sign_in @user_without_books
+
+    assert_no_difference('Book.count') do
       delete book_url(@book)
     end
 

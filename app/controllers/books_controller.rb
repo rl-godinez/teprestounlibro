@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class BooksController < ApplicationController
-  before_action :find_book, only: %i[show edit update destroy]
+  before_action :find_book, only: %i[show edit update destroy require_book_owner]
   before_action :authenticate_user!
+  before_action :require_book_owner, only: %i[show edit update destroy]
 
   def index
     @books = Book.all
@@ -50,5 +51,9 @@ class BooksController < ApplicationController
 
   def book_params
     params.require(:book).permit(:name, :description, :status, category_ids: [])
+  end
+
+  def require_book_owner
+    redirect_to books_url, alert: "Hey! you can't edit this book" unless @book.user == current_user
   end
 end
