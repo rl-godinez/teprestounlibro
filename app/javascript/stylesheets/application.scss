@@ -1,1 +1,19 @@
-@import './bootstrap_custom.scss'
+@import './bootstrap_custom.scss';
+
+.categories {
+
+  .card-body {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+
+    .card-title {
+      margin-bottom: 0;
+
+      h5 {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

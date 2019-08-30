@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       root to: "admin_users#index"
       end
   end
+
   resources :books
   root 'welcome#index'
 
@@ -16,5 +17,5 @@ Rails.application.routes.draw do
 
   devise_for :admin_users
 
-  resources :categories
+  resources :categories, only: [:index, :show]
 end

@@ -1,0 +1,17 @@
+<section class="jumbotron text-center">
+  <div class="container">
+    <h1 class="jumbotron-heading"><%= @category.name %></h1>
+    <p class="lead text-muted">Here we have listed all the books containing the selected category, enjoy them!</p>
+  </div>
+</section>
+
+<div class="container">
+  <% if @books.any? %>
+    <%= render 'books/book', collection: @books %>
+  <% else %>
+    <div class="text-center">
+      <h2>There are not books related with this category yet =(</h2>
+      <h3>come back later!</h3>
+    </div>
+  <% end %>
+</div>
