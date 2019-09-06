@@ -19,7 +19,7 @@ module Admin
       fill_in "Name", with: 'Updated name'
       click_on 'Update Category'
 
-      assert_content "Category successfully updated"
+      assert_content "Category was successfully updated."
     end
 
     test "not able to update a category" do

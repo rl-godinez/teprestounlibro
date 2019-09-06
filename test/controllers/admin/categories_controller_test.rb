@@ -72,7 +72,7 @@ module Admin
         post admin_categories_url, params: { category: { name: 'Programming' } }
       end
 
-      assert_redirected_to admin_categories_url
+      assert_redirected_to admin_category_url(Category.last)
     end
 
     test 'admin should update category' do
@@ -80,7 +80,7 @@ module Admin
 
       patch admin_category_url(@category), params: { category: { name: 'Graphic novel' } }
 
-      assert_redirected_to admin_categories_url
+      assert_redirected_to admin_category_url(Category.last)
 
       @category.reload
 
