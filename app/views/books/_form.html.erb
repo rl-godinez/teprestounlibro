@@ -1,29 +1,13 @@
+
 <%= form_with(model: book, local: true) do |form| %>
-  <% if book.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
-
-      <ul>
-        <% book.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
+  <div class="form-group">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :description %>
-    <%= form.text_field :description %>
-  </div>
-
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.number_field :status %>
+    <%= form.text_area :description, class: 'form-control', rows: 8 %>
   </div>
 
   <h5>Select a category</h5>
@@ -33,7 +17,8 @@
     <% end %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="actions my-4">
+    <%= form.submit class: 'btn btn-primary' %>
+    <%= link_to 'Cancel', books_path, class: 'btn btn-danger' %>
   </div>
 <% end %>

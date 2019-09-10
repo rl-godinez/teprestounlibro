@@ -114,6 +114,19 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to books_url
   end
 
+  test "user can change status from book" do
+    sign_in @user
+
+    old_status = @book.status
+
+    get toggle_status_book_url(@book)
+
+    @book.reload
+
+    assert_not_equal old_status, @book.status
+
+  end
+
   test "user can borrow a book" do
     sign_in @user_without_books
 

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   resources :books do
     member do
+      get :toggle_status
       get :assign
     end
   end

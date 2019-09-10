@@ -1,6 +1,9 @@
-<h1>Editing Book</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Editing <%= @book.name.titleize %> book</h1>
 
-<%= render 'form', book: @book %>
-
-<%= link_to 'Show', @book %> |
-<%= link_to 'Back', books_path %>
+      <%= render 'form', book: @book %>
+    </div>
+  </div>
+</div>
