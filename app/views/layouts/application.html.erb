@@ -11,12 +11,9 @@
   </head>
 
   <body>
-    <% flash.each do |name, msg| -%>
 
-      <%= content_tag :div, msg, class: name %>
-    <% end -%>
-
-<%= link_to "salir", destroy_user_session_path, method: :delete%>
+    <%= render "layouts/header" %>
+    <%= render "shared/flash_messages" %>
     <%= yield %>
   </body>
 </html>
