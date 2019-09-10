@@ -17,3 +17,7 @@
 
 <%= link_to 'Edit', edit_book_path(@book) %> |
 <%= link_to 'Back', books_path %>
+
+<% if @book.user != current_user %>
+  <%= link_to 'Borrow this book', assign_book_path %>
+<% end %>

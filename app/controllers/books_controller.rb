@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BooksController < ApplicationController
-  before_action :find_book, only: %i[show edit update destroy require_book_owner]
+  before_action :find_book, only: %i[show edit update destroy require_book_owner assign]
   before_action :authenticate_user!
   before_action :require_book_owner, only: %i[show edit update destroy]
 
@@ -41,6 +41,11 @@ class BooksController < ApplicationController
   def destroy
     @book.destroy
     redirect_to books_url, notice: 'Book was successfully destroyed.'
+  end
+
+  def assign
+    @book.update(secondary_user_id: current_user.id)
+    redirect_to @book, notice: 'Thank you for select this book, we hope you enjoy it!'
   end
 
   private

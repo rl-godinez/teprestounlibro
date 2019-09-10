@@ -10,7 +10,6 @@ Rails.application.routes.draw do
       end
   end
 
-  resources :books
   root 'welcome#index'
 
   devise_for :users, path: '', path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'register' }
@@ -18,4 +17,10 @@ Rails.application.routes.draw do
   devise_for :admin_users
 
   resources :categories, only: [:index, :show]
+
+  resources :books do
+    member do
+      get :assign
+    end
+  end
 end

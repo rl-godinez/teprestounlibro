@@ -113,4 +113,14 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to books_url
   end
+
+  test "user can borrow a book" do
+    sign_in @user_without_books
+
+    get assign_book_url(@book)
+
+    @book.reload
+
+    assert_equal @user_without_books, @book.secondary_user
+  end
 end
