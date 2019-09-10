@@ -1,23 +1,38 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="col-md-12">
+    <h4>Name:</h4>
+    <p><%= @book.name %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @book.name %>
-</p>
+    <h4>Description:</h4>
+    <p><%= @book.description %></p>
+    <hr>
+    <h5>This book is</h5>
 
-<p>
-  <strong>Description:</strong>
-  <%= @book.description %>
-</p>
+    <p>
+      <% if @book.secondary_user == current_user %>
+        <span class="badge badge-pill badge-success">Assigned to you!</span>
+      <% else %>
+        <span class="badge badge-pill badge-<%= @book.not_available? ? 'danger' : 'success' %>"><%= @book.status.titleize %></span>
+      <% end %>
+    </p>
 
-<p>
-  <strong>Status:</strong>
-  <%= @book.status %>
-</p>
+    <% if current_user == @book.user %>
+      <span>Change book status to be</span>
+      <%= link_to "#{@book.not_available? ? 'Available' : 'Not available'}", toggle_status_book_path, class: "badge badge-pill badge-#{@book.not_available? ? 'success' : 'danger'}" %>
 
-<%= link_to 'Edit', edit_book_path(@book) %> |
-<%= link_to 'Back', books_path %>
+      <br>
+      <%= link_to 'Edit', edit_book_path(@book) %> |
+    <% end %>
 
-<% if @book.user != current_user %>
-  <%= link_to 'Borrow this book', assign_book_path %>
-<% end %>
+    <% if current_user && @book.user != current_user && @book.secondary_user_id.nil? %>
+      <%= link_to 'Borrow this book', assign_book_path %> |
+    <% end %>
+
+    <%= link_to 'Return to books list', books_path %>
+  </div>
+</div>
+
+
+
+
+

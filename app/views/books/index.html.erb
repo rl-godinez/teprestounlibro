@@ -1,6 +1,6 @@
-<section class="jumbotron text-center">
+<section id="index-books" class="jumbotron text-center">
   <div class="container">
-    <h1 class="jumbotron-heading">Books</h1>
+    <h1 class="jumbotron-heading">There <%= @books.count > 1 ? "are" : "is" %> <%= "#{pluralize(@books.count, "book")}" %> waiting for you!</h1>
   </div>
 </section>
 

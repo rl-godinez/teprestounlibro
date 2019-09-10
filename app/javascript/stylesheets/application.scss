@@ -43,3 +43,17 @@ body{
 .devise-forms {
   justify-content: center;
 }
+
+#index-books {
+  background:
+    linear-gradient(to bottom right,rgba(21,22,47,1), rgba(249,208,39,0.4)),
+    url("../../assets/images/books.jpg");
+  background-size: cover;
+  background-position: center;
+  border-radius: 0;
+  color: #fff;
+  height: 40vh;
+  display: flex;
+  align-items: center;
+}
+

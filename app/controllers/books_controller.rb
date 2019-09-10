@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class BooksController < ApplicationController
-  before_action :find_book, only: %i[show edit update destroy require_book_owner assign]
-  before_action :authenticate_user!
-  before_action :require_book_owner, only: %i[show edit update destroy]
+  before_action :find_book, only: %i[show edit update destroy require_book_owner toggle_status assign]
+  before_action :authenticate_user!, except: %i[index show]
+  before_action :require_book_owner, only: %i[edit update destroy]
 
   def index
     @books = Book.all
@@ -43,8 +43,14 @@ class BooksController < ApplicationController
     redirect_to books_url, notice: 'Book was successfully destroyed.'
   end
 
+  def toggle_status
+    @book.not_available? ? @book.available! : @book.not_available!
+    redirect_to book_url(@book)
+  end
+
   def assign
     @book.update(secondary_user_id: current_user.id)
+    @book.not_available!
     redirect_to @book, notice: 'Thank you for select this book, we hope you enjoy it!'
   end
 
@@ -55,7 +61,7 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:name, :description, :status, category_ids: [])
+    params.require(:book).permit(:name, :description, category_ids: [])
   end
 
   def require_book_owner
