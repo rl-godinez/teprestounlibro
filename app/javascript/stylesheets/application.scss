@@ -42,9 +42,11 @@ body{
 
 .devise-forms {
   justify-content: center;
+  margin-top: 6rem;
 }
 
 #index-books {
+  align-items: center;
   background:
     linear-gradient(to bottom right,rgba(21,22,47,1), rgba(249,208,39,0.4)),
     url("../../assets/images/books.jpg");
@@ -52,8 +54,7 @@ body{
   background-position: center;
   border-radius: 0;
   color: #fff;
-  height: 40vh;
   display: flex;
-  align-items: center;
+  height: 40vh;
 }
 
