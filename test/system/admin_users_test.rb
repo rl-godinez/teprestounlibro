@@ -2,13 +2,11 @@ require "application_system_test_case"
 
 class AdminUsersTest < ApplicationSystemTestCase
   test "visiting the admin login" do
-    skip 'until ci is fixed'
     visit new_admin_user_session_url
     assert_selector "label", text: "Email"
   end
 
   test "admin can login" do
-    skip 'until ci is fixed'
     visit new_admin_user_session_url
     fill_in 'Email', with: 'admin@mail.com'
     fill_in 'Password', with: '111111'
