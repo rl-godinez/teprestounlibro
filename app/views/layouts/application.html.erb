@@ -11,9 +11,22 @@
   </head>
 
   <body>
-    <%= render "layouts/header" %>
+    <% if controller_name == "sessions" && resource.is_a?(AdminUser) %>
+      <%= render "layouts/admin_header" %>
+    <% else %>
+      <%= render "layouts/header" %>
+    <% end %>
+
     <%= render "shared/flash_messages" %>
 
     <%= yield %>
   </body>
+
+  <script>
+    window.setTimeout(function() {
+      $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove();
+      });
+    }, 2500);
+  </script>
 </html>

@@ -6,8 +6,8 @@ Rails.application.routes.draw do
       resources :books
       resources :categories
 
-      root to: "admin_users#index"
-      end
+      root "admin_users#index"
+    end
   end
 
   root 'welcome#index'
