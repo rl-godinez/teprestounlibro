@@ -2,13 +2,11 @@ require "application_system_test_case"
 
 class UsersTest < ApplicationSystemTestCase
   test "visiting the user login" do
-    skip 'until ci is fixed'
     visit new_user_session_url
     assert_selector "label", text: "Email"
   end
 
   test "user can login" do
-    skip 'until ci is fixed'
     visit new_user_session_url
     fill_in 'Email', with: 'user1@mail.com'
     fill_in 'Password', with: '111111'

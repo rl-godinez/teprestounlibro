@@ -8,14 +8,12 @@ class BooksTest < ApplicationSystemTestCase
   end
 
   test "visiting the index" do
-    skip 'until ci is fixed'
     sign_in @user
     visit books_url
     assert_selector "h1", text: "There are 2 books waiting for you!"
   end
 
   test "creating a Book" do
-    skip 'until ci is fixed'
     sign_in @user
     visit books_url
     click_on "New Book"
@@ -29,7 +27,6 @@ class BooksTest < ApplicationSystemTestCase
   end
 
   test "can not create a Book with empty params" do
-    skip 'until ci is fixed'
     sign_in @user
     visit books_url
     click_on "New Book"
@@ -42,7 +39,6 @@ class BooksTest < ApplicationSystemTestCase
   end
 
   test "updating a Book" do
-    skip 'until ci is fixed'
     sign_in @user
     visit books_url
     click_on "Edit", match: :first
@@ -56,7 +52,6 @@ class BooksTest < ApplicationSystemTestCase
   end
 
   test "can not update a Book with empty params" do
-    skip 'until ci is fixed'
     sign_in @user
     visit books_url
     click_on "Edit this book", match: :first
@@ -69,7 +64,7 @@ class BooksTest < ApplicationSystemTestCase
   end
 
   test "destroying a Book" do
-    skip 'until ci is fixed'
+    skip 'failing in local'
     sign_in @user
     visit books_url
     page.accept_confirm do
@@ -80,7 +75,6 @@ class BooksTest < ApplicationSystemTestCase
   end
 
   test "only book owner can destroy a Book" do
-    skip 'until ci is fixed'
     sign_in @user_without_books
 
     visit books_url
@@ -89,7 +83,6 @@ class BooksTest < ApplicationSystemTestCase
   end
 
   test "only book owner can edit its books" do
-    skip 'until ci is fixed'
     sign_in @user_without_books
 
     visit edit_book_path(@book)
@@ -100,7 +93,6 @@ class BooksTest < ApplicationSystemTestCase
   end
 
   test "user can change status from book" do
-    skip 'until ci is fixed'
     sign_in @user
     visit book_url(@book)
 

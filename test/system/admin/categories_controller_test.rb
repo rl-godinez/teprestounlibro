@@ -2,20 +2,17 @@ require "application_system_test_case"
 module Admin
   class CategoriesTest < ApplicationSystemTestCase
     setup do
-      skip 'until ci is fixed'
       @category = categories(:one)
       @admin = admin_users(:one)
     end
 
     test "visiting the index" do
-      skip 'until ci is fixed'
       sign_in @admin
       visit admin_categories_url
       assert_selector "h1", text: "Categories"
     end
 
     test "updating a category" do
-      skip 'until ci is fixed'
       sign_in @admin
       visit admin_categories_url
       click_on "Edit", match: :first
@@ -26,7 +23,6 @@ module Admin
     end
 
     test "not able to update a category" do
-      skip 'until ci is fixed'
       sign_in @admin
       visit admin_categories_url
       click_on "Edit", match: :first
@@ -37,7 +33,6 @@ module Admin
     end
 
     test "create a category" do
-      skip 'until ci is fixed'
       sign_in @admin
       visit admin_categories_url
       click_on 'New category'
@@ -50,7 +45,6 @@ module Admin
     end
 
     test "not able to create a category" do
-      skip 'until ci is fixed'
       sign_in @admin
       visit admin_categories_url
       click_on 'New category'
@@ -63,7 +57,6 @@ module Admin
     end
 
     test "deleting a category" do
-      skip 'until ci is fixed'
       sign_in @admin
       visit admin_categories_url
 
