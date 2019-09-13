@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
 
   root 'welcome#index'
+  get '/terms_and_conditions', to: "welcome#terms_conditions"
 
   devise_for :users, path: '', path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'register' }
 

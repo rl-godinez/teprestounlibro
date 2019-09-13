@@ -6,4 +6,9 @@ class WelcomeControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "get terms_and_conditions" do
+    get root_url
+    assert_response :success
+  end
+
 end
