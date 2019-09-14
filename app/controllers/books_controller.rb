@@ -45,6 +45,9 @@ class BooksController < ApplicationController
 
   def toggle_status
     @book.not_available? ? @book.available! : @book.not_available!
+
+    @book.update(secondary_user_id: nil) if @book.available?
+
     redirect_to book_url(@book)
   end
 
@@ -61,7 +64,7 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:name, :description, category_ids: [])
+    params.require(:book).permit(:name, :description, :picture, category_ids: [])
   end
 
   def require_book_owner

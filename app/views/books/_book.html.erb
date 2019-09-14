@@ -2,7 +2,7 @@
   <% collection.each do |book| %>
     <div class="col-md-4">
       <div class="card mb-4 shadow-sm">
-        <img src="https://via.placeholder.com/200x100" class="card-img-top" alt="...">
+        <%= image_tag(book.picture.url, class: "card-img-top") if book.picture? %>
         <div class="card-body">
           <h5 class="card-title"><%= link_to book.name.titleize, book_path(book) %></h5>
           <p class="card-text"><%= truncate(book.description.titleize, lenght: 20) %></p>

@@ -58,6 +58,38 @@ body{
   height: 40vh;
 }
 
+.card-img-top {
+  margin: 10px auto;
+  height: 200px;
+  width: 200px;
+}
+
+.book-info {
+  position: relative;
+  min-height: 70vh;
+
+  img {
+    max-height: 600px;
+  }
+
+  .overflow-auto {
+    max-height: 150px;
+  }
+
+  .actions {
+    position: absolute;
+    bottom: 0;
+  }
+
+  .book-alert {
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+  }
+}
+
 .terms-conditions{
   span{
     font-weight: 700;
