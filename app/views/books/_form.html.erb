@@ -1,5 +1,5 @@
 
-<%= form_with(model: book, local: true) do |form| %>
+<%= form_with(model: book, local: true, multipart: true) do |form| %>
   <div class="form-group">
     <%= form.label :name %>
     <%= form.text_field :name, class: 'form-control' %>
@@ -9,6 +9,12 @@
     <%= form.label :description %>
     <%= form.text_area :description, class: 'form-control', rows: 8 %>
   </div>
+
+  <div class="custom-file">
+    <%= form.label :picture, 'Select a picture', class: 'custom-file-label' %>
+    <%= form.file_field :picture, accept: 'image/jpeg, image/png', class: 'custom-file-input' %>
+  </div>
+
 
   <h5>Select a category</h5>
   <div class="field form-check form-check-inline">
@@ -22,3 +28,11 @@
     <%= link_to 'Cancel', books_path, class: 'btn btn-danger' %>
   </div>
 <% end %>
+
+<script>
+  $(document).on('ready turbolinks:load', function() {
+    $('.custom-file-input').change(function(){
+      $('.custom-file-label').text(this.value);
+    });
+  });
+</script>

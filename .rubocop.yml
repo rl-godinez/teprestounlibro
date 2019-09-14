@@ -18,6 +18,7 @@ AllCops:
     - 'config/**/*'
     - 'bin/**/*'
     - 'test/**/*'
+    - 'app/helpers/*'
 Metrics/AbcSize:
   Max: 18
 

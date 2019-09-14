@@ -1,38 +1,54 @@
 <div class="container">
-  <div class="col-md-12">
-    <h4>Name:</h4>
-    <p><%= @book.name %></p>
+  <div class="row pt-5 book-info">
+    <div class="col-md-6 text-center">
+      <%= image_tag(@book.picture.url, class: "rounded img-fluid") if @book.picture? %>
+    </div>
+    <div class="col-md-6 pt-4">
+      <h4>Name:</h4>
+      <p><%= @book.name.titleize %></p>
 
-    <h4>Description:</h4>
-    <p><%= @book.description %></p>
-    <hr>
-    <h5>This book is</h5>
+      <h4>Description:</h4>
+      <div class="overflow-auto"">
+        <p><%= @book.description.titleize %></p>
+      </div>
 
-    <p>
-      <% if @book.secondary_user == current_user %>
-        <span class="badge badge-pill badge-success">Assigned to you!</span>
-      <% else %>
-        <span class="badge badge-pill badge-<%= @book.not_available? ? 'danger' : 'success' %>"><%= @book.status.titleize %></span>
+      <hr>
+      <h5>This book is</h5>
+
+      <p>
+        <% if current_user.present? && @book.secondary_user == current_user %>
+          <span class="badge badge-pill badge-success">Assigned to you!</span>
+        <% else %>
+          <span class="badge badge-pill badge-<%= @book.not_available? ? 'danger' : 'success' %>"><%= @book.status.titleize %></span>
+        <% end %>
+      </p>
+
+      <% if current_user.present? %>
+        <% if current_user == @book.user %>
+          <span>Change book status to be</span>
+          <%= link_to "#{@book.not_available? ? 'Available' : 'Not available'}", toggle_status_book_path, class: "mb-4 badge badge-pill badge-#{@book.not_available? ? 'success' : 'danger'}" %>
+
+          <%= assigned_to(@book) %>
+        <% end %>
+        <% if able_to_borrow?(@book, current_user) %>
+          <%= link_to 'Borrow this book', assign_book_path, class: 'btn btn-outline-warning' %>
+        <% elsif Book.where(secondary_user_id: current_user.id).count > 0 %>
+          <div class="book-alert alert-warning" role="alert">
+            You already have a book borrowed, by the moment it is limited to just by one per user =)
+          </div>
+        <% end %>
+      <% elsif @book.available? %>
+        <div class="book-alert alert-warning" role="alert">
+          <%= link_to "Register", new_user_registration_path, class: 'alert-link' %> or <%= link_to "Login", new_user_session_path, class: 'alert-link' %> to borrow it!
+        </div>
       <% end %>
-    </p>
 
-    <% if current_user == @book.user %>
-      <span>Change book status to be</span>
-      <%= link_to "#{@book.not_available? ? 'Available' : 'Not available'}", toggle_status_book_path, class: "badge badge-pill badge-#{@book.not_available? ? 'success' : 'danger'}" %>
-
-      <br>
-      <%= link_to 'Edit', edit_book_path(@book) %> |
-    <% end %>
-
-    <% if current_user && @book.user != current_user && @book.secondary_user_id.nil? %>
-      <%= link_to 'Borrow this book', assign_book_path %> |
-    <% end %>
-
-    <%= link_to 'Return to books list', books_path %>
+      <div class="actions">
+        <% if current_user == @book.user %>
+          <%= link_to 'Edit', edit_book_path(@book) %> |
+        <% end %>
+        <%= link_to 'Return to books list', books_path %>
+      </div>
+    </div>
   </div>
 </div>
-
-
-
-
-

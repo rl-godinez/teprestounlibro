@@ -5,7 +5,9 @@ class Book < ApplicationRecord
   has_many :book_categories
   has_many :categories, through: :book_categories
 
-  validates_presence_of :name, :description, :category_ids
+  mount_uploader :picture, PictureUploader
+
+  validates_presence_of :name, :description, :category_ids, :picture
 
   enum status: %i[available not_available]
 
