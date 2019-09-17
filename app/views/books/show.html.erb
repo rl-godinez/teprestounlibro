@@ -24,7 +24,7 @@
       </p>
 
       <% if current_user.present? %>
-        <% if current_user == @book.user %>
+        <% if current_user == @book.user && !@book.pending_approval? %>
           <span>Change book status to be</span>
           <%= link_to "#{@book.not_available? ? 'Available' : 'Not available'}", toggle_status_book_path, class: "mb-4 badge badge-pill badge-#{@book.not_available? ? 'success' : 'danger'}" %>
 

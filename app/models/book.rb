@@ -9,7 +9,9 @@ class Book < ApplicationRecord
 
   validates_presence_of :name, :description, :category_ids, :picture
 
-  enum status: %i[available not_available]
+  enum status: %i[pending_approval available not_available]
+
+  scope :approved_books, -> { where.not(status: 0) }
 
   def secondary_user
     User.find_by_id(secondary_user_id)

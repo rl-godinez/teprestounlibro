@@ -2,9 +2,10 @@ require 'test_helper'
 
 class BooksControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @book = books(:one)
+    @book = books(:two)
     @user = users(:one)
     @user_without_books = users(:two)
+    @book_not_approved = books(:one)
   end
 
   test "should not get new if user is not signed in" do
@@ -31,8 +32,10 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
 
     assert_difference('Book.count') do
-      post books_url, params: { book: { description: @book.description, name: @book.name, status: @book.status, picture: fixture_file_upload('files/image.jpg', 'image/jpg'), category_ids: [Category.last.id] } }
+      post books_url, params: { book: { description: @book.description, name: @book.name, picture: fixture_file_upload('files/image.jpg', 'image/jpg'), category_ids: [Category.last.id] } }
     end
+
+    assert Book.last.pending_approval?
 
     assert_redirected_to book_url(Book.last)
   end
@@ -135,5 +138,19 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     @book.reload
 
     assert_equal @user_without_books, @book.secondary_user
+  end
+
+  test "user cannot get show for book in pending approval status" do
+    sign_in @user_without_books
+
+    get book_url(@book_not_approved)
+
+    assert_redirected_to books_url
+  end
+
+  test "cannot get show for book in pending approval status" do
+    get book_url(@book_not_approved)
+
+    assert_redirected_to books_url
   end
 end

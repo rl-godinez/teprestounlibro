@@ -3,7 +3,11 @@ Rails.application.routes.draw do
     namespace :admin do
       resources :users
       resources :admin_users
-      resources :books
+      resources :books do
+        member do
+          get :approve
+        end
+      end
       resources :categories
 
       root "admin_users#index"
