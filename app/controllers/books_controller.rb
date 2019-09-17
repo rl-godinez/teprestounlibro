@@ -7,7 +7,12 @@ class BooksController < ApplicationController
   before_action :verify_status, only: [:show]
 
   def index
-    @books = Book.approved_books
+    if params[:user_id].present?
+      return redirect_to books_url unless current_user.present?
+      return redirect_to user_books_url(current_user) unless current_user.id.to_s == params[:user_id]
+    end
+
+    @books = books
   end
 
   def show; end
@@ -59,6 +64,14 @@ class BooksController < ApplicationController
   end
 
   private
+
+  def books
+    if params[:user_id].present?
+      User.find(params[:user_id]).books
+    else
+      Book.approved_books
+    end
+  end
 
   def find_book
     @book = Book.find(params[:id])
