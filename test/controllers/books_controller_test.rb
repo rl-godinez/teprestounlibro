@@ -140,7 +140,16 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     assert_equal @user_without_books, @book.secondary_user
   end
 
-  test "user cannot get show for book in pending approval status" do
+
+  test "should get user books" do
+    sign_in @user
+
+    get user_books_url(@user)
+
+    assert_response :success
+  end
+
+  test "user cannot get show view for a book in pending approval status" do
     sign_in @user_without_books
 
     get book_url(@book_not_approved)
@@ -148,7 +157,7 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to books_url
   end
 
-  test "cannot get show for book in pending approval status" do
+  test "cannot get show view for a book in pending approval status" do
     get book_url(@book_not_approved)
 
     assert_redirected_to books_url

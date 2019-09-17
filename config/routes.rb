@@ -29,4 +29,8 @@ Rails.application.routes.draw do
       get :assign
     end
   end
+
+  resources :users do
+    resources :books, only: [:index]
+  end
 end
