@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class BooksController < ApplicationController
-  before_action :find_book, only: %i[show edit update destroy require_book_owner toggle_status assign]
+  before_action :find_book, only: %i[show edit update destroy require_book_owner toggle_status assign verify_status]
   before_action :authenticate_user!, except: %i[index show]
   before_action :require_book_owner, only: %i[edit update destroy]
+  before_action :verify_status, only: [:show]
 
   def index
-    @books = Book.all
+    @books = Book.approved_books
   end
 
   def show; end
@@ -69,5 +70,10 @@ class BooksController < ApplicationController
 
   def require_book_owner
     redirect_to books_url, alert: "Hey! you can't edit this book" unless @book.user == current_user
+  end
+
+  def verify_status
+    redirect_to books_url, alert: 'The book you are looking for is not approved yet' if
+      @book.pending_approval? && @book.user != current_user
   end
 end
