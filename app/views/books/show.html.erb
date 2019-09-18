@@ -43,6 +43,10 @@
         </div>
       <% end %>
 
+      <div>
+        <small>This book belongs to <strong><%= @book.user.email %></strong></small>
+      </div>
+
       <div class="actions">
         <% if current_user == @book.user %>
           <%= link_to 'Edit', edit_book_path(@book) %> |
