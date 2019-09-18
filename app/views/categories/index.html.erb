@@ -13,7 +13,7 @@
             <div class="card-title">
               <h5 ><%= link_to category.name, category_path(category) %></h5>
             </div>
-            <small><%= pluralize(category.books.count, "book") %></small>
+            <small><%= pluralize(category.approved_books.count, "book") %></small>
           </div>
         </div>
       </div>

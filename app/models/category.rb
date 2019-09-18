@@ -7,6 +7,10 @@ class Category < ApplicationRecord
   before_validation :normalize_name
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
+  def approved_books
+    books.where.not(status: 0)
+  end
+
   private
 
   def normalize_name
