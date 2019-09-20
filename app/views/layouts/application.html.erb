@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Micheteca</title>
+    <title>teprestounlibro</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -20,6 +20,15 @@
     <%= render "shared/flash_messages" %>
 
     <%= yield %>
+
+    <footer>
+      <div class="container">
+        <div class="footer-information"> 
+          <%= link_to "Términos y condiciones", terms_and_conditions_path %>
+          <p><small>Copyright © <%= Time.now.year %>. Todos los derechos reservados.</small></p>
+        </div>
+      </div>
+    </footer>
   </body>
 
   <script>
