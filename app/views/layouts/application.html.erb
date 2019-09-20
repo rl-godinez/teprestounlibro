@@ -7,26 +7,27 @@
 
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
 
   <body>
-    <% if controller_name == "sessions" && resource.is_a?(AdminUser) %>
-      <%= render "layouts/admin_header" %>
-    <% else %>
-      <%= render "layouts/header" %>
-    <% end %>
+    <header>
+      <% if controller_name == "sessions" && resource.is_a?(AdminUser) %>
+        <%= render "layouts/admin_header" %>
+      <% else %>
+        <%= render "layouts/header" %>
+      <% end %>
+    </header>
 
     <%= render "shared/flash_messages" %>
 
     <%= yield %>
 
-    <footer>
+    <footer class="bg-dark text-white">
       <div class="container">
-        <div class="footer-information"> 
-          <%= link_to "Términos y condiciones", terms_and_conditions_path %>
-          <p><small>Copyright © <%= Time.now.year %>. Todos los derechos reservados.</small></p>
-        </div>
+        <%= link_to "Terms and Conditions", terms_and_conditions_path %>
+        <p><small>Copyright © <%= Time.now.year %>. All rights.</small></p>
       </div>
     </footer>
   </body>
@@ -37,5 +38,20 @@
         $(this).remove();
       });
     }, 4000);
+   
+    $(document).ready(function(){
+      $(window).scroll(function(){
+        scroll = $(window).scrollTop();
+        if (scroll > 50) {
+          $(".main-nav").css({"background":"#fff"});
+          $(".main-nav a").css({"color":"#000"});
+          $(".main-nav").css({"box-shadow":"0px 8px 20px 0px rgba(0,0,0,0.19)"});
+        }else{
+          $(".main-nav").css({"background":"transparent"});
+          $(".main-nav a").css({"color":"#fff"});
+          $(".main-nav").css({"box-shadow":"unset"});
+        }
+      });
+    });
   </script>
 </html>

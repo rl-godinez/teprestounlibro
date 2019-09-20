@@ -7,7 +7,7 @@ class CategoriesTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit categories_url
-    assert_selector "h1", text: "Categories"
+    assert_selector "h1", text: "Genres"
   end
 
   test "visiting the category" do

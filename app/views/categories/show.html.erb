@@ -1,7 +1,7 @@
-<section class="jumbotron text-center">
+<section id="categories-index" class="jumbotron text-center">
   <div class="container">
     <h1 class="jumbotron-heading"><%= @category.name %></h1>
-    <p class="lead text-muted">Here we have listed all the books containing the selected category, enjoy them!</p>
+    <h4><%= @category.books.count > 0 ? "These books are" : "This book is" %> included in this category, enjoy them!</h4>
   </div>
 </section>
 

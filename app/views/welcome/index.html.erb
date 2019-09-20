@@ -1,2 +1,24 @@
-<h1>Welcome#index</h1>
-<p>Find me in app/views/welcome/index.html.erb</p>
+<div class="header-home-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h1>Hey... teprestounlibro!</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="homepage-books">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-md-12 text-center">
+        <h2>These are some books we have for you!</h2>
+        <% unless current_user %>
+          <h4>Please <%= link_to "Login", new_user_session_path, class: "light-link" %> or <%= link_to "Register", new_user_registration_path %> to borrow one of them! and if possible don't forget to share yours!</h4>
+        <% end %>
+      </div>
+    </div>
+
+    <%= render "books/book", collection: @books %>
+  </div>
+</section>

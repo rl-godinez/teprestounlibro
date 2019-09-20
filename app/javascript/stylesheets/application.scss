@@ -1,7 +1,11 @@
 @import './bootstrap_custom.scss';
 
-body{
-  padding-top: 60px;
+body {
+  background: linear-gradient(0deg, rgba(241,241,241,0.2) 73%, rgba(0,0,0,0.5) 100%);
+  font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 10rem;
 }
 
 .categories {
@@ -29,15 +33,30 @@ body{
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 100;
+  box-shadow: unset;
+  transition: height .3s ease-out, background .3s ease-out, box-shadow .3s ease-out;
+  transform: translate3d(0, 0, 0);
+  z-index: 1040;
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
 
   .navbar-collapse {
     flex-grow: 0;
   }
 }
 
+header {
+  .navbar-brand, .nav-link {
+    color: rgb(255, 255, 255);
+  }
+}
+
 .alert {
   margin-bottom: 0;
+  position: fixed;
+  width: 100%;
+  top: 60px;
+  z-index: 2000;
 }
 
 .devise-forms {
@@ -46,11 +65,17 @@ body{
 }
 
 footer{
-  position: absolute;
   bottom: 0;
-  font-style: italic;
-  text-align: center;  
   width: 100%;
+  position: absolute;
+  font-style: italic;
+  margin: 50px auto 0 auto;
+  padding: 30px 0;
+  text-align: center;
+
+  a {
+    color: #fff;
+  }
 }
 
 #index-books {
@@ -73,6 +98,7 @@ footer{
 }
 
 .book-info {
+  padding-top: 14vh;
   position: relative;
   min-height: 70vh;
 
@@ -87,6 +113,11 @@ footer{
   .actions {
     position: absolute;
     bottom: 0;
+
+    @media(max-width: 767px) {
+      position: unset;
+      padding: 25px 0;
+    }
   }
 
   .book-alert {
@@ -99,6 +130,8 @@ footer{
 }
 
 .terms-conditions{
+  padding-top: 15vh;
+
   span{
     font-weight: 700;
   }
@@ -108,4 +141,64 @@ footer{
 .navbar-brand {
   font-size: 24px;
   font-weight: 600;
+}
+
+
+.header-home-page {
+  background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(31,30,30,0.3) 50%, rgba(0,0,0,1) 100%), url("../../assets/images/homepage.jpg");
+  background-size: cover;
+  background-position: center;
+  border-radius: 0;
+  color: #fff;
+  display: flex;
+  height: 70vh;
+  background-attachment: fixed;
+  padding-top: 30vh;
+
+  h1 {
+    font-size: 45px;
+  }
+}
+
+.homepage-books {
+  padding-top: 4rem;
+
+  h2 {
+    margin-bottom: 25px;
+  }
+
+  h4 {
+    a {
+    color: #f9d026;
+    font-weight: 600;
+    }
+  }
+
+}
+
+.book-form {
+  padding-top: 6rem;
+}
+
+.navbar-toggler-icon {
+  background-image: $navbar-light-toggler-icon-bg;
+} 
+
+#categories-index {
+  align-items: center;
+  background:
+    linear-gradient(to bottom right,rgba(21,22,47,1), rgba(249,208,39,0.4)),
+    url("../../assets/images/categories.jpg");
+  background-size: cover;
+  background-position: center;
+  border-radius: 0;
+  color: #fff;
+  display: flex;
+  height: 40vh;
+}
+
+.form-check-inline {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-between;
 }
