@@ -15,11 +15,11 @@
     <%= form.file_field :picture, accept: 'image/jpeg, image/png', class: 'custom-file-input' %>
   </div>
 
+  <h5 class="my-3">Select as many categories as you wish</h5>
 
-  <h5>Select a category</h5>
   <div class="field form-check form-check-inline">
     <%= form.collection_check_boxes :category_ids, Category.all, :id, :name do |cb| %>
-      <% cb.label(class: "form-check-label") { cb.check_box(class: "form-check-input" ) + cb.text } %>
+      <% cb.label(class: "form-check-label") { cb.check_box(class: "mx-2 form-check-input" ) + cb.text } %>
     <% end %>
   </div>
 

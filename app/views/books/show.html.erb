@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row pt-5 book-info">
+  <div class="row book-info">
     <div class="col-md-6 text-center">
       <%= image_tag(@book.picture.url, class: "rounded img-fluid") if @book.picture? %>
     </div>
@@ -34,7 +34,7 @@
           <%= link_to 'Borrow this book', assign_book_path, class: 'btn btn-outline-warning' %>
         <% elsif Book.where(secondary_user_id: current_user.id).count > 0 %>
           <div class="book-alert alert-warning" role="alert">
-            You already have a book borrowed, by the moment it is limited to just by one per user =)
+            You already have borrowed a book, by the moment it is limited to just by one per user =)
           </div>
         <% end %>
       <% elsif @book.available? %>
@@ -43,7 +43,7 @@
         </div>
       <% end %>
 
-      <div>
+      <div class="my-3">
         <small>This book belongs to <strong><%= @book.user.email %></strong></small>
       </div>
 
