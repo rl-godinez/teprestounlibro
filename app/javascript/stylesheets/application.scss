@@ -100,7 +100,11 @@ footer{
 .book-info {
   padding-top: 14vh;
   position: relative;
-  min-height: 70vh;
+  min-height: 90vh;
+
+  @media(max-width: 767px) {
+    min-height: 70vh;
+  }
 
   img {
     max-height: 600px;
@@ -182,7 +186,7 @@ footer{
 
 .navbar-toggler-icon {
   background-image: $navbar-light-toggler-icon-bg;
-} 
+}
 
 #categories-index {
   align-items: center;

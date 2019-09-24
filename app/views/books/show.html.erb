@@ -29,10 +29,14 @@
           <%= link_to "#{@book.not_available? ? 'Available' : 'Not available'}", toggle_status_book_path, class: "mb-4 badge badge-pill badge-#{@book.not_available? ? 'success' : 'danger'}" %>
 
           <%= assigned_to(@book) %>
+        <% elsif current_user == @book.user && @book.pending_approval? %>
+          <div class="book-alert alert-warning" role="alert">
+            This book is under approval, please wait until one of ours administrators approve it!
+          </div>
         <% end %>
         <% if able_to_borrow?(@book, current_user) %>
           <%= link_to 'Borrow this book', assign_book_path, class: 'btn btn-outline-warning' %>
-        <% elsif Book.where(secondary_user_id: current_user.id).count > 0 %>
+        <% elsif Book.where(secondary_user_id: current_user.id).count > 0 && current_user != @book.user %>
           <div class="book-alert alert-warning" role="alert">
             You already have borrowed a book, by the moment it is limited to just by one per user =)
           </div>
