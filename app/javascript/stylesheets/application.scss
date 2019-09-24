@@ -18,6 +18,11 @@ body {
     .card-title {
       margin-bottom: 0;
 
+      a {
+        color: #f9d026;
+        font-weight: 600;
+      }
+
       h5 {
         margin-bottom: 0;
       }
@@ -92,9 +97,8 @@ footer{
 }
 
 .card-img-top {
-  margin: 10px auto;
   height: 200px;
-  width: 200px;
+  width: 49%;
 }
 
 .book-info {
@@ -205,4 +209,35 @@ footer{
   display: flex;
   flex-flow: wrap;
   justify-content: space-between;
+}
+
+.book-card {
+  .card {
+    flex-direction: unset;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px;
+
+    .card-body {
+      font-size: 14px;
+      padding: 10px 0 10px 10px;
+      width: 49%;
+    }
+
+    .categories {
+      overflow: auto;
+      height: 68px;
+    }
+
+    .card-title {
+      flex: 0 0 100%;
+      margin-bottom: 0.75rem;
+      text-align: center;
+
+      a {
+        color: #f9d026;
+        font-weight: 600;
+      }
+    }
+  }
 }
