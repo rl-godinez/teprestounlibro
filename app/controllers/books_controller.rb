@@ -28,6 +28,7 @@ class BooksController < ApplicationController
     @book.user = current_user
 
     if @book.save
+      AdminUserMailer.book_approval(@book).deliver_later
       redirect_to @book, notice: 'Book was successfully created.'
     else
       flash.now[:danger] = @book.errors.full_messages.to_sentence
@@ -58,12 +59,18 @@ class BooksController < ApplicationController
   end
 
   def assign
-    @book.update(secondary_user_id: current_user.id)
+    return redirect_to books_path, alert: 'There is an error borrowing this book' unless update_secondary_user
+
     @book.not_available!
-    redirect_to @book, notice: 'Thank you for select this book, we hope you enjoy it!'
+    UserMailer.borrowed_book(@book).deliver_later
+    redirect_to @book, notice: 'Thank you for selecting this book, we hope you enjoy it!'
   end
 
   private
+
+  def update_secondary_user
+    @book.update(secondary_user_id: current_user.id)
+  end
 
   def books
     if params[:user_id].present?

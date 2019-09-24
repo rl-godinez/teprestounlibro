@@ -31,8 +31,10 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     skip 'this is failing on ci and in local it is working well'
     sign_in @user
 
-    assert_difference('Book.count') do
-      post books_url, params: { book: { description: @book.description, name: @book.name, picture: fixture_file_upload('files/image.jpg', 'image/jpg'), category_ids: [Category.last.id] } }
+    assert_enqueued_jobs 1 do
+      assert_difference('Book.count') do
+        post books_url, params: { book: { description: @book.description, name: @book.name, picture: fixture_file_upload('files/image.jpg', 'image/jpg'), category_ids: [Category.last.id] } }
+      end
     end
 
     assert Book.last.pending_approval?
@@ -138,6 +140,13 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     @book.reload
 
     assert_equal @user_without_books, @book.secondary_user
+  end
+
+  test "email is enqueued when a book is borrowed" do
+    sign_in @user_without_books
+    assert_enqueued_jobs 1 do
+      get assign_book_url(@book)
+    end
   end
 
 
