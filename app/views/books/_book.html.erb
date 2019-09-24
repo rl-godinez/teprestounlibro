@@ -2,10 +2,10 @@
   <% collection.each do |book| %>
     <div class="col-md-4 book-card">
       <div class="card mb-4 shadow-sm">
-        <h5 class="card-title"><%= link_to book.name.titleize, book_path(book) %></h5>
+        <h5 class="card-title"><%= link_to truncate(book.name.titleize, length: 20), book_path(book) %></h5>
         <%= image_tag(book.picture.url, class: "card-img-top") if book.picture? %>
         <div class="card-body">
-          <p class="card-text"><%= truncate(book.description.titleize, lenght: 20) %></p>
+          <p class="card-text"><%= truncate(book.description.titleize, length: 40) %></p>
           <p>Status: <span class="badge badge-pill badge-<%= "#{book.not_available? ? 'danger' : 'success'}" %>"><%= book.status.titleize %></span></p>
 
           <% if book.categories.any? %>
