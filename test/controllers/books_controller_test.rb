@@ -6,6 +6,7 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     @user = users(:one)
     @user_without_books = users(:two)
     @book_not_approved = books(:one)
+    @book_assigned_to_user = books(:three)
   end
 
   test "should not get new if user is not signed in" do
@@ -170,5 +171,13 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     get book_url(@book_not_approved)
 
     assert_redirected_to books_url
+  end
+
+  test "assigned_to" do
+    sign_in @user
+    user_with_borrowed_book = users(:three)
+
+    get book_url(@book_assigned_to_user)
+    assert_equal @book_assigned_to_user.secondary_user, user_with_borrowed_book
   end
 end

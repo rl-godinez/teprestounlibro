@@ -13,3 +13,11 @@ two:
   status: 1
   user: one
   picture: "image.jpg"
+
+three:
+  name: MyString
+  description: MyString
+  status: 1
+  user: one
+  picture: "image.jpg"
+  secondary_user_id: 113629430

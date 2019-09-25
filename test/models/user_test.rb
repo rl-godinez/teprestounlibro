@@ -31,7 +31,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test '#books' do
-    assert_equal 2, @user.books.size
+    assert_equal 3, @user.books.size
   end
 
   test '#books after destroying user' do
