@@ -7,6 +7,7 @@ stages:
   - build
   - lint
   - test
+  - deploy
 
 cache:
   paths:
@@ -47,6 +48,16 @@ test_system:
     - bundle exec rake db:create RAILS_ENV=test
     - bundle exec rake db:test:prepare RAILS_ENV=test
     - bundle exec rake test:system
+
+heroku:
+  stage: deploy
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY
+    - heroku run rake db:migrate --app=$HEROKU_APP_NAME
+  only:
+    - master
+
 
 
 
