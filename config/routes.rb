@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
   devise_for :users, path: '', path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'register' }, controllers: { registrations: 'users/registrations', }
 
-  devise_for :admin_users
+  devise_for :admin_users, controllers: { sessions: 'admin_users/sessions' }
 
   resources :categories, only: [:index, :show]
 
