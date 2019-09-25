@@ -1,6 +1,7 @@
 
 <h1>Hello, <%= @book.user.name %>!</h1>
 <p>
-  <%= @book.secondary_user.name %> want's to read your book <%= @book.name %>.<br>
+  <%= @book.secondary_user.name %> want's to read your book <strong><%= @book.name.titleize %>.</strong><br>
 </p>
+<p>Please prepare your book and contact user <strong><%= @book.secondary_user.name %></strong> to close the deal.</p>
 

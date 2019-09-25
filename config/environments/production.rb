@@ -16,7 +16,7 @@ Rails.application.configure do
 
   # Mailer configuration
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: "http://shrouded-sierra-25847.herokuapp.com" }
+  config.action_mailer.default_url_options = { host: "shrouded-sierra-25847.herokuapp.com", protocol: 'https'}
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
   # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
