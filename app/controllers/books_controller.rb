@@ -15,7 +15,9 @@ class BooksController < ApplicationController
     @books = books
   end
 
-  def show; end
+  def show
+    redirect_to books_url, danger: "Book doesn't exist" if @book.nil?
+  end
 
   def new
     @book = Book.new
@@ -81,7 +83,7 @@ class BooksController < ApplicationController
   end
 
   def find_book
-    @book = Book.find(params[:id])
+    @book = Book.find_by_id(params[:id])
   end
 
   def book_params
@@ -93,6 +95,8 @@ class BooksController < ApplicationController
   end
 
   def verify_status
+    return if @book.nil?
+
     redirect_to books_url, alert: 'The book you are looking for is not approved yet' if
       @book.pending_approval? && @book.user != current_user
   end

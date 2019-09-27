@@ -182,4 +182,9 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     get book_url(@book_assigned_to_user)
     assert_equal @book_assigned_to_user.secondary_user, user_with_borrowed_book
   end
+
+  test "get index if book not found" do
+    get book_url(id: "99")
+    assert_redirected_to books_url
+  end
 end
