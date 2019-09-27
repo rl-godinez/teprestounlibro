@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'minitest/autorun'
 
 class BooksControllerTest < ActionDispatch::IntegrationTest
   setup do
@@ -29,7 +30,6 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create book" do
-    skip 'this is failing on ci and in local it is working well'
     sign_in @user
 
     assert_enqueued_jobs 1 do
@@ -41,6 +41,8 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     assert Book.last.pending_approval?
 
     assert_redirected_to book_url(Book.last)
+
+    FileUtils.rm_rf(Dir["#{CarrierWave.root}/uploads/book/picture/#{Book.last.id}"])
   end
 
   test 'should not create book with invalid params' do

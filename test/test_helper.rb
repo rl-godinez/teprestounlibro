@@ -1,5 +1,8 @@
 require 'simplecov'
-SimpleCov.start 'rails'
+SimpleCov.start do
+  'rails'
+  'channels'
+end
 
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
@@ -10,9 +13,9 @@ class CarrierWave::Uploader::Base
     #do not remove fixture
   end
 
-  def store!
-    # Not storing uploads in the tests
-  end
+    # def store!
+    #   # Not storing uploads in the tests
+    # end
 end
 
 class ActiveSupport::TestCase
