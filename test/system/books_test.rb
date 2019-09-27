@@ -1,27 +1,40 @@
 require "application_system_test_case"
-require 'tmpdir' # Not needed if you are using rails.
 
 class BooksTest < ApplicationSystemTestCase
+
   setup do
     @book = books(:one)
     @user = users(:one)
     @user_without_books = users(:two)
+    PictureUploader.enable_processing = true
+    CarrierWave.root = Rails.root.join('public')
+    file_path = File.join( fixture_path, "files", "image.jpg")
+    data_url  = "data:image/jpeg;base64,"
+    data_url += Base64.encode64(File.open(file_path).read)
+    book = Book.create(name: 'test', description: 'test', user_id: @user.id, picture: data_url)
+    @uploader = PictureUploader.new(book, :picture)
+    File.open(file_path) { |f| @uploader.store!(f) }
   end
 
   test "visiting the index" do
-    skip 'until fix carrierwave issue'
     sign_in @user
     visit books_url
     assert_selector "h1", text: "There are 2 books waiting for you!"
   end
 
   test "creating a Book" do
-    skip 'until fix carrierwave issue'
     sign_in @user
-    visit books_url
-    click_on "New Book"
-    page.execute_script("$('#book_picture').css('opacity','1')")
-    attach_file("book[picture]", "#{Rails.root}/test/fixtures/files/image.jpg")
+    visit user_books_url(@user)
+    click_on "Add a new book"
+
+    page.refresh
+
+    page.execute_script("document.getElementById('book_picture').style.opacity = 10")
+
+    page.attach_file("#{Rails.root}/test/fixtures/files/image.jpg") do
+      page.find(:xpath, "//*[@id='book_picture']").click
+    end
+
     fill_in "Description", with: @book.description
     fill_in "Name", with: @book.name
     check "Comedy"
@@ -31,10 +44,10 @@ class BooksTest < ApplicationSystemTestCase
   end
 
   test "can not create a Book with empty params" do
-    skip 'until fix carrierwave issue'
+
     sign_in @user
-    visit books_url
-    click_on "New Book"
+    visit user_books_url(@user)
+    click_on "Add a new book"
 
     fill_in "Description", with: ''
     fill_in "Name", with: ''
@@ -44,37 +57,40 @@ class BooksTest < ApplicationSystemTestCase
   end
 
   test "updating a Book" do
-    skip 'until fix carrierwave issue'
     sign_in @user
-    visit books_url
+    visit user_books_url(@user)
     click_on "Edit", match: :first
-
+    page.refresh
     fill_in "Description", with: @book.description
     fill_in "Name", with: @book.name
     check "Comedy"
+    page.execute_script("document.getElementById('book_picture').style.opacity = 10")
+    page.attach_file("#{Rails.root}/test/fixtures/files/image.jpg") do
+      page.find(:xpath, "//*[@id='book_picture']").click
+    end
+
     click_on "Update Book"
 
     assert_text "Book was successfully updated"
   end
 
   test "can not update a Book with empty params" do
-    skip 'until fix carrierwave issue'
     sign_in @user
-    visit books_url
+    visit user_books_url(@user)
     click_on "Edit this book", match: :first
 
     fill_in "Description", with: ''
     fill_in "Name", with: ''
     click_on "Update Book"
 
-    assert_text "Name can't be blank and Description can't be blank"
+    assert page.body.include?("Name can't be blank")
+    assert page.body.include?("Description can't be blank")
   end
 
   test "destroying a Book" do
-    skip 'until fix carrierwave issue'
-    skip 'failing in local'
     sign_in @user
-    visit books_url
+    visit user_books_url(@user)
+    page.refresh
     page.accept_confirm do
       click_on "Delete this book", match: :first
     end
@@ -83,7 +99,6 @@ class BooksTest < ApplicationSystemTestCase
   end
 
   test "only book owner can destroy a Book" do
-    skip 'until fix carrierwave issue'
     sign_in @user_without_books
 
     visit books_url
@@ -92,7 +107,6 @@ class BooksTest < ApplicationSystemTestCase
   end
 
   test "only book owner can edit its books" do
-    skip 'until fix carrierwave issue'
     sign_in @user_without_books
 
     visit edit_book_path(@book)
@@ -103,16 +117,19 @@ class BooksTest < ApplicationSystemTestCase
   end
 
   test "user can change status from book" do
-    skip 'until fix carrierwave issue'
     sign_in @user
-    visit book_url(@book)
 
-    old_status = @book.status
+    book = Book.last
+    book.available!
+    book.reload
+    visit book_url(book)
 
-    click_on @book.not_available? ? "Available" : "Not available"
+    old_status = book.status
+
+    click_on book.not_available? ? "Available" : "Not available"
 
     assert has_current_path?(book_path(@book))
-byebug
+
     @book.reload
 
     assert_not_equal old_status, @book.status
